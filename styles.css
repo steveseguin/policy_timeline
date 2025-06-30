@@ -1,0 +1,959 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --socialist-color: #DC2626;
+    --republican-color: #2563EB;
+    --optimal-color: #10B981;
+    --bg-dark: #0F172A;
+    --bg-light: #1E293B;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --border-color: #334155;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+    position: relative;
+}
+
+.hero-content {
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--socialist-color), var(--optimal-color), var(--republican-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+/* Introduction Section */
+.introduction, .paths-overview {
+    padding: 4rem 0;
+    background-color: var(--bg-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.introduction h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.key-metrics {
+    background-color: var(--bg-dark);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.key-metrics ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.key-metrics li {
+    padding: 0.5rem 0;
+    border-left: 3px solid var(--optimal-color);
+    padding-left: 1rem;
+}
+
+/* Path Cards */
+.path-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.path-card {
+    background-color: var(--bg-dark);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.path-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.path-card.socialist::before { background-color: var(--socialist-color); }
+.path-card.republican::before { background-color: var(--republican-color); }
+.path-card.optimal::before { background-color: var(--optimal-color); }
+
+.path-card:hover {
+    transform: translateY(-5px);
+}
+
+.path-card.socialist:hover { border-color: var(--socialist-color); }
+.path-card.republican:hover { border-color: var(--republican-color); }
+.path-card.optimal:hover { border-color: var(--optimal-color); }
+
+.path-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.path-card h4 {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.philosophy {
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.key-policies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.key-policies span {
+    background-color: var(--bg-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+}
+
+/* Timeline Container */
+.timeline-container {
+    position: relative;
+    padding: 2rem 0;
+    background-color: var(--bg-dark);
+}
+
+.timeline-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-dark);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.column-header {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.column-header.socialist { background-color: rgba(220, 38, 38, 0.1); }
+.column-header.republican { background-color: rgba(37, 99, 235, 0.1); }
+.column-header.optimal { background-color: rgba(16, 185, 129, 0.1); }
+
+/* Timeline Sections */
+.timeline-section {
+    padding: 4rem 2rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+.timeline-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Connecting Lines Between Years */
+.timeline-section::after {
+    content: '';
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 4rem;
+    background: linear-gradient(to bottom, var(--border-color), transparent);
+    opacity: 0.5;
+}
+
+.timeline-section.final::after {
+    display: none;
+}
+
+.year-marker {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.year-marker span {
+    font-size: 3rem;
+    font-weight: bold;
+    display: block;
+    background: linear-gradient(to right, var(--socialist-color), var(--optimal-color), var(--republican-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.year-marker p {
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.timeline-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+}
+
+/* Column Styles */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Event Cards */
+.event-card {
+    background-color: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.event-card::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--bg-light);
+    border: 3px solid var(--border-color);
+    z-index: 2;
+}
+
+.event-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.socialist .event-card::before { border-color: var(--socialist-color); }
+.republican .event-card::before { border-color: var(--republican-color); }
+.optimal .event-card::before { border-color: var(--optimal-color); }
+
+.socialist .event-card::after { background-color: var(--socialist-color); }
+.republican .event-card::after { background-color: var(--republican-color); }
+.optimal .event-card::after { background-color: var(--optimal-color); }
+
+.event-card h4 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.event-card.action {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.event-card.effect.positive {
+    background-color: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.event-card.effect.negative {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.event-card.crisis {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.event-card.story {
+    background-color: rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.event-card.outcome {
+    background-color: var(--bg-dark);
+    border-width: 2px;
+}
+
+.event-card.baseline {
+    background: linear-gradient(135deg, var(--bg-light) 0%, rgba(255,255,255,0.02) 100%);
+    border: 2px solid var(--border-color);
+}
+
+.baseline-note {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border-color);
+    text-align: center;
+}
+
+.baseline-note p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Icon Lists */
+.icon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.icon-list li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Metrics */
+.metrics {
+    list-style: none;
+    margin-top: 1rem;
+    padding: 0;
+}
+
+.metrics li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metrics li:last-child {
+    border-bottom: none;
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.metric-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.metric-value.positive {
+    color: var(--success);
+}
+
+.metric-value.negative {
+    color: var(--danger);
+}
+
+.final-metrics {
+    font-size: 1.1rem;
+    margin: 1.5rem 0;
+}
+
+.final-metrics li {
+    padding: 0.75rem 0;
+    font-weight: 500;
+}
+
+/* Headlines and Stories */
+.headline {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.detail {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Verdict */
+.verdict {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.verdict.positive {
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.verdict.negative {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Insight Sections */
+.insight-section {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.insight-section h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.insight-box {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.insight-box:hover {
+    transform: translateY(-2px);
+    border-color: var(--optimal-color);
+}
+
+.insight-box h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.insight-box p {
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.insight-box sup {
+    color: var(--optimal-color);
+    font-weight: 600;
+}
+
+.insight-box a {
+    color: var(--optimal-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.insight-box a:hover {
+    color: var(--success);
+}
+
+/* Analysis Section */
+.analysis {
+    padding: 4rem 0;
+    background-color: var(--bg-light);
+}
+
+.analysis h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.insight-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.insight-card {
+    background-color: var(--bg-dark);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.insight-card h3 {
+    margin-bottom: 1rem;
+    color: var(--optimal-color);
+}
+
+.methodology {
+    background-color: var(--bg-dark);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.methodology h3 {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.methodology ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.methodology li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.methodology li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--optimal-color);
+}
+
+/* References Section */
+.references {
+    background-color: var(--bg-dark);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-top: 3rem;
+    border: 1px solid var(--border-color);
+}
+
+.references h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.reference-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.reference-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.reference-list li:last-child {
+    border-bottom: none;
+}
+
+.reference-list li strong {
+    color: var(--text-primary);
+    display: inline-block;
+    margin-bottom: 0.25rem;
+}
+
+.reference-list li em {
+    color: var(--optimal-color);
+    font-style: normal;
+    font-size: 0.85rem;
+}
+
+.reference-list a {
+    color: var(--optimal-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.reference-list a:hover {
+    color: var(--success);
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: var(--bg-dark);
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.validation-note {
+    margin-top: 1rem;
+    color: var(--optimal-color);
+    font-weight: 500;
+}
+
+/* AI Reviews */
+.ai-reviews {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--bg-light);
+    border-radius: 1rem;
+    text-align: left;
+}
+
+.ai-reviews h4 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.review-quote {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--optimal-color);
+    border-radius: 0.5rem;
+}
+
+.reviewer {
+    font-weight: 600;
+    color: var(--optimal-color);
+    margin-bottom: 0.5rem;
+}
+
+.review-quote blockquote {
+    margin: 0;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* Flow Arrows */
+.flow-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    margin: 1rem 0;
+    opacity: 0.5;
+}
+
+.flow-arrow svg {
+    width: 30px;
+    height: 30px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(5px);
+    }
+}
+
+/* Visual Timeline Progress */
+.timeline-progress {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.timeline-progress.visible {
+    opacity: 1;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    margin: 20px 0;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.timeline-dot.active {
+    background-color: var(--optimal-color);
+    transform: scale(1.5);
+}
+
+.timeline-dot::after {
+    content: attr(data-year);
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.timeline-dot:hover::after,
+.timeline-dot.active::after {
+    opacity: 1;
+}
+
+/* Mobile Tab System */
+.mobile-tabs {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-dark);
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    justify-content: space-around;
+    gap: 0.5rem;
+}
+
+.tab-button {
+    flex: 1;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tab-button.active {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    border-width: 2px;
+}
+
+.tab-button.active[data-path="socialist"] {
+    border-color: var(--socialist-color);
+    color: var(--socialist-color);
+}
+
+.tab-button.active[data-path="republican"] {
+    border-color: var(--republican-color);
+    color: var(--republican-color);
+}
+
+.tab-button.active[data-path="optimal"] {
+    border-color: var(--optimal-color);
+    color: var(--optimal-color);
+}
+
+.tab-icon {
+    font-size: 1.5rem;
+}
+
+.tab-label {
+    font-weight: 500;
+}
+
+.desktop-only {
+    display: grid;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    /* Show mobile tabs */
+    .mobile-tabs {
+        display: flex;
+    }
+    
+    /* Hide desktop header */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Single column layout on mobile */
+    .timeline-content {
+        display: block;
+    }
+    
+    /* Hide non-active columns on mobile */
+    .column {
+        display: none;
+    }
+    
+    .column.active {
+        display: block;
+    }
+    
+    /* Default to socialist path on mobile */
+    .column.socialist {
+        display: block;
+    }
+    
+    /* Adjust spacing */
+    .timeline-section {
+        padding: 2rem 1rem;
+    }
+    
+    .event-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Responsive text */
+    .hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Path cards stack on mobile */
+    .path-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Insight boxes stack */
+    .insight-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+    
+    /* Hide timeline progress on mobile */
+    .timeline-progress {
+        display: none;
+    }
+    
+    /* Adjust year markers */
+    .year-marker span {
+        font-size: 2rem;
+    }
+    
+    /* Smaller metrics on mobile */
+    .metrics {
+        font-size: 0.9rem;
+    }
+    
+    /* Full width buttons on mobile */
+    .key-policies {
+        flex-wrap: wrap;
+    }
+    
+    .key-policies span {
+        flex: 1 1 45%;
+        text-align: center;
+    }
+    
+    /* References readable on mobile */
+    .reference-list li {
+        font-size: 0.85rem;
+        padding: 0.75rem 0;
+    }
+    
+    /* Analysis section responsive */
+    .insight-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Container padding on mobile */
+    .container {
+        padding: 0 1rem;
+    }
+}
