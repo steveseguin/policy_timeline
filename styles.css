@@ -881,11 +881,6 @@ footer {
         display: block;
     }
     
-    /* Default to socialist path on mobile */
-    .column.socialist {
-        display: block;
-    }
-    
     /* Adjust spacing */
     .timeline-section {
         padding: 2rem 1rem;
