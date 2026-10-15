@@ -225,14 +225,14 @@ document.addEventListener('DOMContentLoaded', function() {
     createTimelineProgress();
 
     // Add subtle animations to metrics
-    const animateNumbers = (element, start, end, duration) => {
+    const animateNumbers = (element, start, end, duration, decimalPlaces) => {
         const startTime = performance.now();
         const update = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
             const current = start + (end - start) * progress;
-            element.textContent = current.toFixed(0);
+            element.textContent = current.toFixed(decimalPlaces);
             
             if (progress < 1) {
                 requestAnimationFrame(update);
@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     if (match) {
                         const number = parseFloat(match[1]);
+                        const decimalPlaces = (match[1].split('.')[1] || '').length;
                         const span = document.createElement('span');
                         span.textContent = '0';
                         
@@ -262,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         setTimeout(() => {
                             const targetSpan = metric.querySelector('span');
-                            animateNumbers(targetSpan, 0, number, 1000);
+                            animateNumbers(targetSpan, 0, number, 1000, decimalPlaces);
                         }, 200);
                     }
                 });
